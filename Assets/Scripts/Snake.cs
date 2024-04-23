@@ -16,7 +16,7 @@ public class Snake : MonoBehaviour {
     private enum State { 
         Alive,
         Dead
-    }
+    }   
 
     private State state;
     private Direction gridMoveDirection;
@@ -45,7 +45,7 @@ public class Snake : MonoBehaviour {
     }
 
     private void Awake() {
-        gridPosition = new Vector3(10, 10);
+        gridPosition = new Vector3(0, 0);
         gridMoveTimerMax = .1f;
         gridMoveTimer = gridMoveTimerMax;
         gridMoveDirection = Direction.Right;

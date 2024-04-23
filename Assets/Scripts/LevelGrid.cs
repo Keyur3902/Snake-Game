@@ -1,18 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class LevelGrid {
 
     private Vector3 foodGridPosition;
     private GameObject foodGameObject;
-    private int width;
-    private int height;
+    private float width;
+    private float height;
     private Snake snake;
+    private float globalWidth;
+    private float globalHeight;
+    private ViewportHandler viewportHandler;
 
-    public LevelGrid(int width, int height) {
+    public LevelGrid(float width, float height, ViewportHandler viewportHandler){
         this.width = width;
         this.height = height;
+        this.viewportHandler = viewportHandler;
     }
 
     public void Setup(Snake snake) {
@@ -21,9 +26,14 @@ public class LevelGrid {
         SpawnFood();
     }
 
+    private void Awake(){
+        globalWidth = viewportHandler.gridWidth - 0.5f;
+        globalHeight = viewportHandler.gridHeight - 0.5f;
+    }
+
     private void SpawnFood() {
         do {
-            foodGridPosition = new Vector3(Random.Range(3, width-3), Random.Range(2, height-2));
+            foodGridPosition = new Vector3(Random.Range(-globalWidth+2, width-3), Random.Range(-globalHeight+2, height-2));
         } while (snake.GetFullSnakeGridPositionList().IndexOf(foodGridPosition) != -1);
 
         foodGameObject = new GameObject("Food", typeof(SpriteRenderer));
@@ -31,8 +41,24 @@ public class LevelGrid {
         foodGameObject.transform.position = new Vector3(foodGridPosition.x, foodGridPosition.y);
     }
 
+    // public bool TrySnakeEatFood(Vector3 snakeGridPosition) {
+    //     Vector3 roundedSnakeGridPosition = new Vector3(Mathf.Round(snakeGridPosition.x), Mathf.Round(snakeGridPosition.y));
+    //     Vector3 roundedFoodGridPosition = new Vector3(Mathf.Round(foodGridPosition.x), Mathf.Round(foodGridPosition.y));
+    //     if (roundedSnakeGridPosition  == roundedFoodGridPosition) {
+    //         Object.Destroy(foodGameObject);
+    //         SpawnFood();
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
     public bool TrySnakeEatFood(Vector3 snakeGridPosition) {
-        if (snakeGridPosition == foodGridPosition) {
+        float tolerance = 0.7f;
+
+        float squaredDistance = (snakeGridPosition - foodGridPosition).sqrMagnitude;
+
+        if (squaredDistance <= tolerance * tolerance) {
             Object.Destroy(foodGameObject);
             SpawnFood();
             return true;
@@ -41,18 +67,21 @@ public class LevelGrid {
         }
     }
 
+
     public Vector3 ValidateGridPosition(Vector3 gridPosition) {
-        if (gridPosition.x < 0) {
+        globalHeight = viewportHandler.gridHeight - 0.5f;
+        globalWidth = viewportHandler.gridWidth - 0.5f;
+        if (gridPosition.x < -globalWidth) {
             gridPosition.x = width - 1;
         }
         if (gridPosition.x > width - 1) {
-            gridPosition.x = 0;
+            gridPosition.x = -globalWidth;
         }
-        if (gridPosition.y < 0) {
+        if (gridPosition.y < -globalHeight) {
             gridPosition.y = height - 1;
         }
         if (gridPosition.y > height - 1) {
-            gridPosition.y = 0;
+            gridPosition.y = -globalHeight;
         }
         return gridPosition;
     }

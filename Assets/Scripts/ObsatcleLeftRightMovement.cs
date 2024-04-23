@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ObsatcleLeftRightMovement : MonoBehaviour
 {
-    private float speed = 1f; // Speed of the movement
-    private float upDownDistance = 2f; // Distance to move up and down
+    private float speed = 1f;
+    private float upDownDistance = 2f;
     private Vector3 startPosition;
     private GameManager gameManager;
 
@@ -18,7 +18,6 @@ public class ObsatcleLeftRightMovement : MonoBehaviour
 
     void Update()
     {
-        // Calculate the new position based on the sine wave
         if (gameManager.gameIsActive)
         {
             float newX = startPosition.x + Mathf.Sin(Time.time * speed) * upDownDistance;

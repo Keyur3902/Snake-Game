@@ -39,8 +39,8 @@ public class FoodManager : MonoBehaviour
 
     public void SpawnPowerUp()
     {
-        float x = Random.Range(3, 55);
-        float y = Random.Range(3, 20);
+        float x = Random.Range(-22, 22);
+        float y = Random.Range(-10, 10);
         GameObject newPowerUp = Instantiate(powerUpPrefab, new Vector3(x, y, 0), Quaternion.identity);
         isSpawning = true;
         powerUpActive = true; // Set power-up active
