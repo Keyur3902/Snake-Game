@@ -12,9 +12,15 @@ public class FoodManager : MonoBehaviour
     private bool isSpawning;
     private bool powerUpActive = false;
     private float powerUpDuration = 7f;
+    private ViewportHandler viewportHandler;
+    float globalHeight;
+    float globalWidth;
 
     private void Start()
     {
+        viewportHandler = FindObjectOfType<ViewportHandler>();
+        globalHeight = viewportHandler.gridHeight + 0.5f;
+        globalWidth = viewportHandler.gridWidth + 0.5f;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         StartSpawn();
     }
@@ -39,11 +45,11 @@ public class FoodManager : MonoBehaviour
 
     public void SpawnPowerUp()
     {
-        float x = Random.Range(-22, 22);
-        float y = Random.Range(-10, 10);
+        float x = Random.Range(-globalWidth+2, globalWidth-2);
+        float y = Random.Range(-globalHeight-2, globalHeight+2);
         GameObject newPowerUp = Instantiate(powerUpPrefab, new Vector3(x, y, 0), Quaternion.identity);
         isSpawning = true;
-        powerUpActive = true; // Set power-up active
+        powerUpActive = true;
         StartCoroutine(RotatePowerUp(newPowerUp));
         StartCoroutine(DestroyPowerUpAfterDelay(newPowerUp));
     }

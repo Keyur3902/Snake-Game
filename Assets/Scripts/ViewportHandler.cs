@@ -162,7 +162,7 @@ public float GridHeight
         bottomY = cameraY - _height / 2;
 
         gridWidth = rightX;
-        gridHeight = topY;
+        gridHeight = bottomY;
 
 
         //*** bottom
