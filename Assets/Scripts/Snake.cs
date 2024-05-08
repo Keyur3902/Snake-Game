@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Snake : MonoBehaviour {
 
@@ -39,6 +40,7 @@ public class Snake : MonoBehaviour {
     private bool touchStarted = false;
     private Vector2 touchStartPos;
     private bool isMode;
+    public float speed;
 
     public void Setup(LevelGrid levelGrid) {
         this.levelGrid = levelGrid;
@@ -64,6 +66,7 @@ public class Snake : MonoBehaviour {
     }
 
     private void Start() {
+        speed = 1f;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         isMode = intToBool(PlayerPrefs.GetInt("isMode"));
     }
@@ -163,7 +166,7 @@ public class Snake : MonoBehaviour {
     private void HandleGridMovement() {
         if (state != State.Alive) return; 
 
-        gridMoveTimer += Time.deltaTime * 2f;
+        gridMoveTimer += Time.deltaTime * speed;
         if (gridMoveTimer >= gridMoveTimerMax) {
             gridMoveTimer -= gridMoveTimerMax;
 

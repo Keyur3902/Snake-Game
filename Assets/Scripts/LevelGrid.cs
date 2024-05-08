@@ -27,8 +27,8 @@ public class LevelGrid {
     }
 
     private void Awake(){
-        globalWidth = viewportHandler.gridWidth - 0.5f;
-        globalHeight = viewportHandler.gridHeight - 0.5f;
+        globalWidth = viewportHandler.gridWidth;
+        globalHeight = viewportHandler.gridHeight;
     }
 
     private void SpawnFood() {
@@ -69,8 +69,8 @@ public class LevelGrid {
 
 
     public Vector3 ValidateGridPosition(Vector3 gridPosition) {
-        globalHeight = viewportHandler.gridHeight - 0.5f;
-        globalWidth = viewportHandler.gridWidth - 0.5f;
+        globalHeight = viewportHandler.gridHeight;
+        globalWidth = viewportHandler.gridWidth;
         if (gridPosition.x < -globalWidth) {
             gridPosition.x = width - 1;
         }
@@ -78,9 +78,9 @@ public class LevelGrid {
             gridPosition.x = -globalWidth;
         }
         if (gridPosition.y < globalHeight) {
-            gridPosition.y = -height -0.8f;
+            gridPosition.y = -height -1f;
         }
-        if (gridPosition.y > -height -0.8f) {
+        if (gridPosition.y > -height -1f) {
             gridPosition.y = globalHeight;
         }
         return gridPosition;

@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public Button mainMenuButton;
     public GameObject controllerButton;
     public GameObject wall;
+    private Snake snake;
     // public GameObject titleScreen;
 
     private bool intToBool(int intValue)
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        snake = FindObjectOfType<Snake>();
         highScore = PlayerPrefs.GetFloat("HighScore", 0);
         bool isMode = intToBool(PlayerPrefs.GetInt("isMode"));
         bool isLevel = intToBool(PlayerPrefs.GetInt("isLevel"));
@@ -70,6 +72,16 @@ public class GameManager : MonoBehaviour
 
     public void UpdateScore(int scoreToAdd)
     {
+        if(score > 5){
+            print(score);
+            snake.speed = 1.5f;
+        }
+        if(score > 15){
+            snake.speed = 2;  
+        }
+        if(score > 50){
+            snake.speed = 3;
+        }
 
         if (FindObjectOfType<Snake>().isPowerUp == true)
         {
@@ -102,10 +114,11 @@ public class GameManager : MonoBehaviour
     {
         // FindObjectOfType<SnakeMovement>().rb.velocity = Vector2.zero;
         gameIsActive = false;
-        restartButton.gameObject.SetActive(true);
-        quitButton.gameObject.SetActive(true);
-        gameOverText.gameObject.SetActive(true);
-        pauseButton.gameObject.SetActive(false);
+        SceneManager.LoadScene("GameOverScene");
+        // restartButton.gameObject.SetActive(true);
+        // quitButton.gameObject.SetActive(true);
+        // gameOverText.gameObject.SetActive(true);
+        // pauseButton.gameObject.SetActive(false);
     }
 
     public void RestartGame()

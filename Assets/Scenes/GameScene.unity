@@ -2389,6 +2389,7 @@ MonoBehaviour:
   snakeBite: {fileID: 970789911}
   isPowerUp: 0
   timerText: {fileID: 1647772759}
+  speed: 0
 --- !u!50 &970789906
 Rigidbody2D:
   serializedVersion: 4
