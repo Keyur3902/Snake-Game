@@ -9,12 +9,13 @@ public class FoodManager : MonoBehaviour
     private float minSpawnDelay = 10;
     private float maxSpawnDelay = 15;
     private GameManager gameManager;
-    private bool isSpawning;
+    public bool isSpawning;
     private bool powerUpActive = false;
     private float powerUpDuration = 7f;
     private ViewportHandler viewportHandler;
     float globalHeight;
     float globalWidth;
+    public Vector3 powerUpPosition;
 
     private void Start()
     {
@@ -48,6 +49,7 @@ public class FoodManager : MonoBehaviour
         float x = Random.Range(-globalWidth+2, globalWidth-2);
         float y = Random.Range(-globalHeight-2, globalHeight+2);
         GameObject newPowerUp = Instantiate(powerUpPrefab, new Vector3(x, y, 0), Quaternion.identity);
+        powerUpPosition = newPowerUp.transform.position;
         isSpawning = true;
         powerUpActive = true;
         StartCoroutine(RotatePowerUp(newPowerUp));
@@ -65,7 +67,7 @@ public class FoodManager : MonoBehaviour
 
     IEnumerator RotatePowerUp(GameObject powerUp)
     {
-        while (isSpawning)
+        while (isSpawning && powerUp != null)
         {
             powerUp.transform.Rotate(Vector3.up, 180 * Time.deltaTime);
             yield return null;

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     // public GameObject foodPrefab;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI gameoverScoreText;
     public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI gameOverText;
     public AudioSource gamePlay;
@@ -19,10 +20,10 @@ public class GameManager : MonoBehaviour
     public Button restartButton;
     public Button quitButton;
     public Button pauseButton;
-    public Button resumeButton;
-    public Button mainMenuButton;
+    public GameObject pauseMenuCanvas;
     public GameObject controllerButton;
     public GameObject wall;
+    public GameObject gameOverCanvas;
     private Snake snake;
     // public GameObject titleScreen;
 
@@ -93,6 +94,7 @@ public class GameManager : MonoBehaviour
         }
 
         scoreText.text = "Score: " + score;
+        gameoverScoreText.text = "Score: " + score;
     }
 
     public void UpdateHighScore()
@@ -114,11 +116,12 @@ public class GameManager : MonoBehaviour
     {
         // FindObjectOfType<SnakeMovement>().rb.velocity = Vector2.zero;
         gameIsActive = false;
-        SceneManager.LoadScene("GameOverScene");
+        // SceneManager.LoadScene("GameOverScene");
         // restartButton.gameObject.SetActive(true);
         // quitButton.gameObject.SetActive(true);
         // gameOverText.gameObject.SetActive(true);
-        // pauseButton.gameObject.SetActive(false);
+        gameOverCanvas.gameObject.SetActive(true);
+        pauseButton.gameObject.SetActive(false);
     }
 
     public void RestartGame()
@@ -148,16 +151,14 @@ public class GameManager : MonoBehaviour
     {
         buttonClick.Play();
         Time.timeScale = 0;
-        resumeButton.gameObject.SetActive(true);
-        mainMenuButton.gameObject.SetActive(true);
+        pauseMenuCanvas.SetActive(true);
     }
 
     public void ResumeGame()
     {
         buttonClick.Play();
         Time.timeScale = 1;
-        resumeButton.gameObject.SetActive(false);
-        mainMenuButton.gameObject.SetActive(false);
+        pauseMenuCanvas.SetActive(false);
     }
 
     public void MainMenuButton()

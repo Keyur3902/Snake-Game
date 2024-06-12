@@ -5,7 +5,7 @@ using UnityEngine.PlayerLoop;
 
 public class LevelGrid {
 
-    private Vector3 foodGridPosition;
+    public Vector3 foodGridPosition;
     private GameObject foodGameObject;
     private float width;
     private float height;
@@ -41,18 +41,6 @@ public class LevelGrid {
         foodGameObject.transform.position = new Vector3(foodGridPosition.x, foodGridPosition.y);
     }
 
-    // public bool TrySnakeEatFood(Vector3 snakeGridPosition) {
-    //     Vector3 roundedSnakeGridPosition = new Vector3(Mathf.Round(snakeGridPosition.x), Mathf.Round(snakeGridPosition.y));
-    //     Vector3 roundedFoodGridPosition = new Vector3(Mathf.Round(foodGridPosition.x), Mathf.Round(foodGridPosition.y));
-    //     if (roundedSnakeGridPosition  == roundedFoodGridPosition) {
-    //         Object.Destroy(foodGameObject);
-    //         SpawnFood();
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
     public bool TrySnakeEatFood(Vector3 snakeGridPosition) {
         float tolerance = 0.7f;
 
@@ -78,9 +66,9 @@ public class LevelGrid {
             gridPosition.x = -globalWidth;
         }
         if (gridPosition.y < globalHeight) {
-            gridPosition.y = -height -1f;
+            gridPosition.y = -height -0.8f;
         }
-        if (gridPosition.y > -height -1f) {
+        if (gridPosition.y > -height -0.8f) {
             gridPosition.y = globalHeight;
         }
         return gridPosition;
