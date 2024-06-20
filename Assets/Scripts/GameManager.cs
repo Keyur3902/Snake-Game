@@ -75,13 +75,13 @@ public class GameManager : MonoBehaviour
     {
         if(score > 5){
             print(score);
-            snake.speed = 1.5f;
+            snake.speed = 15f;
         }
         if(score > 15){
-            snake.speed = 2;  
+            snake.speed = 20;  
         }
         if(score > 50){
-            snake.speed = 3;
+            snake.speed = 30;
         }
 
         if (FindObjectOfType<Snake>().isPowerUp == true)
